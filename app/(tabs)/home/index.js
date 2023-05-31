@@ -11,9 +11,12 @@ import { ScrollView } from 'react-native-gesture-handler';
 import moment from 'moment-timezone';
 import { useIsFocused } from "@react-navigation/native";
 
+import { getAuth } from 'firebase/auth';
+
 const red = 'rgba(199, 43, 98, 1)';
 const yellow = '#ffc107';
 const white = '#fff';
+const regexUid = /^[a-zA-Z0-9]{26}/;
 moment.tz.setDefault("Australia/Melbourne");
 
 const HomePage = () => {
@@ -32,6 +35,11 @@ const HomePage = () => {
   const getInitialData = async () => {
     console.log('Focused');
   }    
+
+  const isValidUID = (uid) => {
+    console.log('type of ', typeof uid);
+    return regexUid.test(uid);
+  }
 
   //Barcode Scanner
   const getBarCodeScannerPermissions = async () => {
@@ -79,10 +87,12 @@ const HomePage = () => {
 
   }, [isFocused]);
   
-  const handleBarCodeScanned = ({ type, data }) => {
+  const handleBarCodeScanned = async ({ type, data }) => {
     setScanned(true);
     // alert(`Bar code with type ${type} and data ${data} has been scanned!`);
-    if (isFinite(data)){
+    // console.log('regexUid.test(data) ==> ', regexUid.test(data));
+    console.log('data ==> ', isValidUID(data));
+    if (isValidUID(data)){
       get(ref(db, `users/${data}`)).then(snapshot => {
         let isUser = snapshot.val();
         console.log({isUser})
@@ -145,7 +155,7 @@ const HomePage = () => {
   return (
     <View style={styles.container}>
       <View style={styles.viewBarcodeContainer}>
-        {scanned && <Button style={styles.scannedButton} title={'Tap to Scan Again'} onPress={() => setScanned(false)} />}
+        {/* {scanned && <Button style={styles.scannedButton} title={'Tap to Scan Again'} onPress={() => setScanned(false)} />} */}
         {/* <Button style={styles.scannedButton} title={'Tap to Scan Again'} onPress={() => setScanned(false)} /> */}
         <BarCodeScanner
           onBarCodeScanned={scanned ? undefined : handleBarCodeScanned}
@@ -180,12 +190,12 @@ const HomePage = () => {
           
         </ScrollView>
       </View>
-      {list && Object.entries(list).map(([key, val], i) => (
+      {/* {list && Object.entries(list).map(([key, val], i) => (
         <Link href={"/home/"+key}>{val.name}</Link>
       ))}
       <Button onPress={ () => {
         incrementByOne();
-      }} title="Increment"></Button>
+      }} title="Increment"></Button> */}
       
     </View>
   )
