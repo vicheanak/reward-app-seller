@@ -25,6 +25,20 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "3d70d54e-ae57-4f58-819e-1384864c4d5c"
+      }
+    },
+    "owner": "vicheanak",
+    "plugins": [
+      [
+        "expo-barcode-scanner",
+        {
+          "cameraPermission": "This app needs access to your Camera to scan the barcode."
+        }
+      ]
+    ]
   }
 }
