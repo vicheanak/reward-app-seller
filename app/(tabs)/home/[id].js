@@ -61,13 +61,13 @@ const HomeDetail = () => {
       if (user.stamps === undefined) user.stamps = 0;
       let newStamps = countStamps - user.stamps;
       if (newStamps > 0) {
-        Alert.alert('Are you sure?', `You want to give ${newStamps} stamps`, [
+        Alert.alert(`Give away ${newStamps} stamps?`, ``, [
           {
-            text: 'Cancel',
+            text: 'NO',
             onPress: () => console.log('Cancel Pressed'),
             style: 'destructive',
           },
-          {text: 'OK', onPress: () => {
+          {text: 'YES', onPress: () => {
             const stampRef = ref(db, 'users/' + id + '/stamps/');
             set(stampRef, countStamps);
             const transactionRef = ref(db, 'transactions/' + new Date().getTime());
@@ -106,7 +106,7 @@ const HomeDetail = () => {
     }
 
     const confirmFreeDrink = () => {
-      Alert.alert('Are you sure?', 'You want to give a free drink', [
+      Alert.alert('Give away free drink?', '', [
         {
           text: 'Cancel',
           onPress: () => console.log('Cancel Pressed'),

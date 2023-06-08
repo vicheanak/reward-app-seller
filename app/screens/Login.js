@@ -23,7 +23,12 @@ const Login = ({navigation}) => {
         setLoading(true);
         try{
             const response = await signInWithEmailAndPassword(auth, email, password);
-            router.replace("/(tabs)/home");
+            const user = auth.currentUser;
+            if (user.email != 'admin@rewardapp.com'){
+                Alert.alert("You're not a Seller!")
+            } else {
+                router.replace("/(tabs)/home");
+            }
         } catch (error) {
             Alert.alert("Sign In Failed");
             console.log(error);
@@ -33,22 +38,22 @@ const Login = ({navigation}) => {
         }
     }
 
-    const signUp = async () => {
-        setLoading(true);
-        try{
-            const response = await createUserWithEmailAndPassword(auth, email, password);
-            console.log(response);
-            await signInWithEmailAndPassword(auth, email, password);
-            router.replace("/(tabs)/home");
-            // Alert.alert("Check your email");
+    // const signUp = async () => {
+    //     setLoading(true);
+    //     try{
+    //         const response = await createUserWithEmailAndPassword(auth, email, password);
+    //         console.log(response);
+    //         await signInWithEmailAndPassword(auth, email, password);
+    //         router.replace("/(tabs)/home");
+    //         // Alert.alert("Check your email");
 
-        } catch (error) {
-            Alert.alert("Signed Up Failed", error.message);
-            console.log(error);
-        } finally {
-            setLoading(false);
-        }
-    }
+    //     } catch (error) {
+    //         Alert.alert("Signed Up Failed", error.message);
+    //         console.log(error);
+    //     } finally {
+    //         setLoading(false);
+    //     }
+    // }
 
     const ValidateEmail = (mail) => {
         if ((/^\w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/.test(mail)))
@@ -108,7 +113,6 @@ const Login = ({navigation}) => {
                     }}
                     secureTextEntry={true}
                     />
-
                 {loading ? 
                 <ActivityIndicator size="large" color="#000000" /> 
                 : <>

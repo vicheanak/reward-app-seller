@@ -22,7 +22,34 @@ const ProfilePage = () => {
 
   return (
     <View style={styles.container}>
-     {/* <Text h4>You're an admin</Text> */}
+     <View style={styles.subContainer}>
+        <Icon
+        name='user'
+        type='font-awesome'
+        onPress={() => console.log('hello')} />
+        <Text h4>Seller</Text>
+      </View>
+      <View style={styles.subContainer}>
+        <Icon
+        name='inbox'
+        type='font-awesome'
+        onPress={() => console.log('hello')} />
+        <Text h4>admin@rewardapp.com</Text>
+      </View>
+      <View style={styles.subContainer}>
+        <Icon
+          name='link'
+          type='font-awesome'
+          onPress={() => console.log('hello')} />
+        <Text h4><Link href={"/profile/termsconditions"}>Terms & Conditions</Link></Text>
+      </View>
+        <View style={styles.subContainer}>
+        <Icon
+          name='link'
+          type='font-awesome'
+          onPress={() => console.log('hello')} />
+        <Text h4><Link href={"/profile/privacy"}>Privacy Policy</Link></Text>
+      </View>
       <Button
         title="LOGOUT"
         titleStyle={styles.submitButtonTitle}
@@ -45,6 +72,13 @@ const styles = StyleSheet.create({
     borderWidth: 2,
     borderColor: red,
     // backgroundColor: yellow
+  },
+  subContainer: { 
+    padding: 10, 
+    flexDirection: 'row', 
+    flexWrap: 'wrap', 
+    width: '70%', 
+    justifyContent: 'space-between' 
   },
   cardTitle: {
     backgroundColor: 'white', 
@@ -90,6 +124,8 @@ const styles = StyleSheet.create({
     marginVertical: 20,
     alignSelf: 'center',
     borderRadius: 20,
+    position: 'absolute',
+    bottom: 10
   },
   buttonFreeDrinkContainer: {
     width: '92%',

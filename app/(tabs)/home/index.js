@@ -1,4 +1,4 @@
-import { View, Button, StyleSheet, FlatList, Alert } from 'react-native'
+import { View, Button, StyleSheet, FlatList, Alert, Dimensions } from 'react-native'
 import React from 'react'
 import { Link, useRouter } from 'expo-router'
 
@@ -12,6 +12,8 @@ import moment from 'moment-timezone';
 import { useIsFocused } from "@react-navigation/native";
 
 import { getAuth } from 'firebase/auth';
+const windowWidth = Dimensions.get('window').width;
+const windowHeight = Dimensions.get('window').height;
 
 const red = 'rgba(199, 43, 98, 1)';
 const yellow = '#ffc107';
@@ -107,7 +109,7 @@ const HomePage = () => {
         console.log('Error get user');
       })
     } else {
-      Alert.alert("QR Code is invalid", "", [
+      Alert.alert("Invalid QR Code", "", [
         {text: 'OK', onPress: () => setScanned(false)},
       ]);
     }
@@ -169,9 +171,9 @@ const HomePage = () => {
           <View>
             <ListItem>
               <ListItem.Content>
-                {val.stamps == 0 ? <ListItem.Title style={{color: red}}>{val.user} got a free drink!</ListItem.Title> : <ListItem.Title>{val.user} got {val.stamps} {val.stamps < 2 ? 'stamp' : 'stamps'}</ListItem.Title> }
+                {val.stamps == 0 ? <ListItem.Title style={{color: red, fontSize: 12}}>{val.user} got a free drink!</ListItem.Title> : <ListItem.Title style={{fontSize: 12}}>{val.user} got {val.stamps} {val.stamps < 2 ? 'stamp' : 'stamps'}</ListItem.Title> }
               </ListItem.Content>
-              <ListItem.Subtitle>{moment(val.dateTime).fromNow()}</ListItem.Subtitle>
+              <ListItem.Subtitle style={{color: red, fontSize: 12, fontStyle: 'italic'}}>{moment(val.dateTime).fromNow()}</ListItem.Subtitle>
               {/* <ListItem.Subtitle>{moment(val.dateTime).format('YYYY-MM-DDTHH:mm:ss.SSS')}</ListItem.Subtitle> */}
             </ListItem>
             <Divider />
@@ -210,7 +212,7 @@ const styles = StyleSheet.create({
     width: '100%', 
     alignSelf: 'center', 
     borderRadius: 10, 
-    padding: 10, 
+    // padding: 10, 
     backgroundColor: 'white'
 },
 scannedButton: {
@@ -225,7 +227,7 @@ scannedButton: {
   },
   transactionTitle: {
     marginLeft: 5,
-    fontSize: 20,
+    fontSize: 15,
     // textAlign: 'center',
     // fontStyle: 'italic',
     // color: red
@@ -238,8 +240,8 @@ scannedButton: {
   },
   viewBarcodeContainer: {
     borderRadius: 20,
-    // marginTop: 20,
-    height: 300,
+    marginTop: 20,
+    height: windowHeight - 500,
     width: '90%'
   },
   input: {
